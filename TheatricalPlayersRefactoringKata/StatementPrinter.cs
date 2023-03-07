@@ -6,17 +6,17 @@ namespace TheatricalPlayersRefactoringKata
 {
     public class StatementPrinter
     {
-        public string Print(Invoice invoice, Dictionary<string, Play> plays)
+        public static string Print(Invoice invoice, Dictionary<string, Play> plays)
         {
             var totalAmount = 0;
             var volumeCredits = 0;
-            var result = string.Format("Statement for {0}\n", invoice.Customer);
-            CultureInfo cultureInfo = new CultureInfo("en-US");
+            var result = $"Statement for {invoice.Customer}\n";
+            var cultureInfo = new CultureInfo("en-US");
 
             foreach(var perf in invoice.Performances) 
             {
-                var play = plays[perf.PlayID];
-                var thisAmount = 0;
+                var play = plays[perf.PlayId];
+                int thisAmount;
                 switch (play.Type) 
                 {
                     case "tragedy":
@@ -45,7 +45,7 @@ namespace TheatricalPlayersRefactoringKata
                 totalAmount += thisAmount;
             }
             result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
-            result += string.Format("You earned {0} credits\n", volumeCredits);
+            result += $"You earned {volumeCredits} credits\n";
             return result;
         }
     }

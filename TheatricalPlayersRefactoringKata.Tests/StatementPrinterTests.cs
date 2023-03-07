@@ -23,7 +23,7 @@ namespace TheatricalPlayersRefactoringKata.Tests
                 new Performance("othello", 40)});
             
             var statementPrinter = new StatementPrinter();
-            var result = statementPrinter.Print(invoice, plays);
+            var result = StatementPrinter.Print(invoice, plays);
             
             Approvals.Verify(result);
         }
@@ -61,7 +61,7 @@ namespace TheatricalPlayersRefactoringKata.Tests
             
             var statementPrinter = new StatementPrinter();
 
-            Assert.Throws<Exception>(() => statementPrinter.Print(invoice, plays));
+            Assert.Throws<Exception>(() => StatementPrinter.Print(invoice, plays));
         }
     }
 }
