@@ -59,12 +59,12 @@ namespace TheatricalPlayersRefactoringKata
                 }
 
                 // print line for this order
-                result.Append(string.Format(cultureInfo,
-                    $"  {play.Name}: {Convert.ToDecimal(playAmount / 100):C} ({performance.Audience} seats)\n"));
+                result.AppendFormat(cultureInfo,
+                    $"  {play.Name}: {Convert.ToDecimal(playAmount / 100):C} ({performance.Audience} seats)\n");
                 totalAmount += playAmount;
             }
 
-            result.Append(string.Format(cultureInfo, $"Amount owed is {Convert.ToDecimal(totalAmount / 100):C}\n"));
+            result.AppendFormat(cultureInfo, $"Amount owed is {Convert.ToDecimal(totalAmount / 100):C}\n");
             result.Append($"You earned {volumeCredits} credits\n");
             return result.ToString();
         }
