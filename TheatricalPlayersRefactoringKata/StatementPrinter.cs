@@ -10,7 +10,7 @@ namespace TheatricalPlayersRefactoringKata
         {
             var totalAmount = 0;
             var volumeCredits = 0;
-            var result = string.Format("Statement for {0}\n", invoice.Customer);
+            var result = $"Statement for {invoice.Customer}\n";
             CultureInfo cultureInfo = new CultureInfo("en-US");
 
             foreach(var perf in invoice.Performances) 
@@ -45,7 +45,7 @@ namespace TheatricalPlayersRefactoringKata
                 totalAmount += thisAmount;
             }
             result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
-            result += string.Format("You earned {0} credits\n", volumeCredits);
+            result += $"You earned {volumeCredits} credits\n";
             return result;
         }
     }
