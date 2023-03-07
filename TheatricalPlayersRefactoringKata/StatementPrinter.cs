@@ -33,8 +33,9 @@ namespace TheatricalPlayersRefactoringKata
             var totalAmount = 0;
             var volumeCredits = 0;
             var result = new StringBuilder();
-            result.Append($"Statement for {invoice.Customer}\n");
-            var cultureInfo = new CultureInfo("en-US");
+            var cultureInfo = new CultureInfo("en-US", true);
+            result.AppendFormat(cultureInfo, "Statement for {0}\n", invoice.Customer);
+
 
             foreach (var performance in invoice.Performances)
             {
@@ -59,13 +60,13 @@ namespace TheatricalPlayersRefactoringKata
                 }
 
                 // print line for this order
-                result.AppendFormat(cultureInfo,
-                    $"  {play.Name}: {Convert.ToDecimal(playAmount / 100):C} ({performance.Audience} seats)\n");
+                result.AppendFormat(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name,
+                    Convert.ToDecimal(playAmount / 100), performance.Audience);
                 totalAmount += playAmount;
             }
 
-            result.AppendFormat(cultureInfo, $"Amount owed is {Convert.ToDecimal(totalAmount / 100):C}\n");
-            result.Append($"You earned {volumeCredits} credits\n");
+            result.AppendFormat(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
+            result.AppendFormat(cultureInfo, "You earned {0} credits\n", volumeCredits);
             return result.ToString();
         }
     }
