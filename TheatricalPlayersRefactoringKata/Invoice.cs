@@ -13,6 +13,5 @@ namespace TheatricalPlayersRefactoringKata
             Customer = customer;
             Performances = performance;
         }
-
     }
 }

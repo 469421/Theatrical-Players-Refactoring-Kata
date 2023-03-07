@@ -11,6 +11,5 @@ namespace TheatricalPlayersRefactoringKata
             PlayId = playId;
             Audience = audience;
         }
-
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
 
 namespace TheatricalPlayersRefactoringKata
 {
-    public class StatementPrinter
+    public static class StatementPrinter
     {
         private static int GetTragedyPlay(int audience)
         {
@@ -31,7 +32,8 @@ namespace TheatricalPlayersRefactoringKata
         {
             var totalAmount = 0;
             var volumeCredits = 0;
-            var result = $"Statement for {invoice.Customer}\n";
+            var result = new StringBuilder();
+            result.Append($"Statement for {invoice.Customer}\n");
             var cultureInfo = new CultureInfo("en-US");
 
             foreach (var performance in invoice.Performances)
@@ -50,21 +52,21 @@ namespace TheatricalPlayersRefactoringKata
                         break;
                     case "comedy":
                         playAmount = GetComedyPlay(performance.Audience);
-                        volumeCredits += (int) Math.Floor((decimal) performance.Audience / 5);
+                        volumeCredits += (int)Math.Floor((decimal)performance.Audience / 5);
                         break;
                     default:
-                        throw new Exception("unknown type: " + play.Type);
+                        throw new PlayException("unknown type: " + play.Type);
                 }
 
                 // print line for this order
-                result += string.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name,
-                    Convert.ToDecimal(playAmount / 100), performance.Audience);
+                result.Append(string.Format(cultureInfo,
+                    $"  {play.Name}: {Convert.ToDecimal(playAmount / 100):C} ({performance.Audience} seats)\n"));
                 totalAmount += playAmount;
             }
 
-            result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
-            result += $"You earned {volumeCredits} credits\n";
-            return result;
+            result.Append(string.Format(cultureInfo, $"Amount owed is {Convert.ToDecimal(totalAmount / 100):C}\n"));
+            result.Append($"You earned {volumeCredits} credits\n");
+            return result.ToString();
         }
     }
 }

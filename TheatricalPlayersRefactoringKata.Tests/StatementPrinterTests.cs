@@ -13,55 +13,42 @@ namespace TheatricalPlayersRefactoringKata.Tests
         [UseReporter(typeof(DiffReporter))]
         public void Test_statement_plain_text_example()
         {
-            var plays = new Dictionary<string, Play>();
-            plays.Add("hamlet", new Play("Hamlet", "tragedy"));
-            plays.Add("as-like", new Play("As You Like It", "comedy"));
-            plays.Add("othello", new Play("Othello", "tragedy"));
+            var plays = new Dictionary<string, Play>
+            {
+                { "hamlet", new Play("Hamlet", "tragedy") },
+                { "as-like", new Play("As You Like It", "comedy") },
+                { "othello", new Play("Othello", "tragedy") }
+            };
 
-            var invoice = new Invoice("BigCo", new List<Performance>{new Performance("hamlet", 55),
-                new Performance("as-like", 35),
-                new Performance("othello", 40)});
-            
-            var statementPrinter = new StatementPrinter();
+            var invoice = new Invoice("BigCo", new List<Performance>
+            {
+                new("hamlet", 55),
+                new("as-like", 35),
+                new("othello", 40)
+            });
+
             var result = StatementPrinter.Print(invoice, plays);
-            
+
             Approvals.Verify(result);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void Test_statement_html_example()
-        {
-            var plays = new Dictionary<string, Play>();
-            plays.Add("hamlet", new Play("Hamlet", "tragedy"));
-            plays.Add("as-like", new Play("As You Like It", "comedy"));
-            plays.Add("othello", new Play("Othello", "tragedy"));
-
-            var invoice = new Invoice("BigCo", new List<Performance>{new Performance("hamlet", 55),
-                new Performance("as-like", 35),
-                new Performance("othello", 40)});
-            
-            var statementPrinter = new StatementPrinter();
-            
-            // Not implemented yet
-            // var result = statementPrinter.PrintAsHtml(invoice, plays);
-            // Approvals.Verify(result);
         }
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void Test_statement_with_new_play_types()
         {
-            var plays = new Dictionary<string, Play>();
-            plays.Add("henry-v", new Play("Henry V", "history"));
-            plays.Add("as-like", new Play("As You Like It", "pastoral"));
+            var plays = new Dictionary<string, Play>
+            {
+                { "henry-v", new Play("Henry V", "history") },
+                { "as-like", new Play("As You Like It", "pastoral") }
+            };
 
-            var invoice = new Invoice("BigCoII", new List<Performance>{new Performance("henry-v", 53),
-                new Performance("as-like", 55)});
-            
-            var statementPrinter = new StatementPrinter();
+            var invoice = new Invoice("BigCoII", new List<Performance>
+            {
+                new("henry-v", 53),
+                new("as-like", 55)
+            });
 
-            Assert.Throws<Exception>(() => StatementPrinter.Print(invoice, plays));
+            Assert.Throws<PlayException>(() => StatementPrinter.Print(invoice, plays));
         }
     }
 }
